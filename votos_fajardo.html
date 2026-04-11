@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa Electoral Santander - Versión Clara</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }
+        #map { height: 100vh; width: 100%; }
+        
+        /* Estilo para los Popups (ahora en blanco/negro para fondo claro) */
+        .custom-popup .leaflet-popup-content-wrapper {
+            background: #ffffff;
+            color: #333;
+            border-radius: 4px;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.2);
+        }
+        
+        /* Leyenda elegante */
+        .legend {
+            background: white;
+            padding: 15px;
+            line-height: 22px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            color: #444;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // --- DATOS DE EJEMPLO (Aquí se cargan tus JSON) ---
+    const votos = {
+    "AGUADA": {
+        "votos_totales": 863,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.81
+    },
+    "ALBANIA": {
+        "votos_totales": 1894,
+        "votos_sergio_fajardo": 20,
+        "porcentaje": 1.06
+    },
+    "ARATOCA": {
+        "votos_totales": 4492,
+        "votos_sergio_fajardo": 24,
+        "porcentaje": 0.53
+    },
+    "BARBOSA": {
+        "votos_totales": 17074,
+        "votos_sergio_fajardo": 147,
+        "porcentaje": 0.86
+    },
+    "BARICHARA": {
+        "votos_totales": 4858,
+        "votos_sergio_fajardo": 101,
+        "porcentaje": 2.08
+    },
+    "BARRANCABERMEJA": {
+        "votos_totales": 116777,
+        "votos_sergio_fajardo": 1292,
+        "porcentaje": 1.11
+    },
+    "BETULIA": {
+        "votos_totales": 2651,
+        "votos_sergio_fajardo": 21,
+        "porcentaje": 0.79
+    },
+    "BOLIVAR": {
+        "votos_totales": 4349,
+        "votos_sergio_fajardo": 35,
+        "porcentaje": 0.8
+    },
+    "BUCARAMANGA": {
+        "votos_totales": 342459,
+        "votos_sergio_fajardo": 6148,
+        "porcentaje": 1.8
+    },
+    "CABRERA": {
+        "votos_totales": 1116,
+        "votos_sergio_fajardo": 4,
+        "porcentaje": 0.36
+    },
+    "CALIFORNIA": {
+        "votos_totales": 1093,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.64
+    },
+    "CAPITANEJO": {
+        "votos_totales": 2962,
+        "votos_sergio_fajardo": 39,
+        "porcentaje": 1.32
+    },
+    "CARCASI": {
+        "votos_totales": 2167,
+        "votos_sergio_fajardo": 8,
+        "porcentaje": 0.37
+    },
+    "CEPITA": {
+        "votos_totales": 1400,
+        "votos_sergio_fajardo": 6,
+        "porcentaje": 0.43
+    },
+    "CERRITO": {
+        "votos_totales": 3317,
+        "votos_sergio_fajardo": 19,
+        "porcentaje": 0.57
+    },
+    "CHARALA": {
+        "votos_totales": 6204,
+        "votos_sergio_fajardo": 52,
+        "porcentaje": 0.84
+    },
+    "CHARTA": {
+        "votos_totales": 2121,
+        "votos_sergio_fajardo": 16,
+        "porcentaje": 0.75
+    },
+    "CHIMA": {
+        "votos_totales": 1591,
+        "votos_sergio_fajardo": 5,
+        "porcentaje": 0.31
+    },
+    "CHIPATA": {
+        "votos_totales": 2296,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 0.65
+    },
+    "CIMITARRA": {
+        "votos_totales": 14652,
+        "votos_sergio_fajardo": 127,
+        "porcentaje": 0.87
+    },
+    "CONCEPCION": {
+        "votos_totales": 3085,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.45
+    },
+    "CONFINES": {
+        "votos_totales": 1838,
+        "votos_sergio_fajardo": 12,
+        "porcentaje": 0.65
+    },
+    "CONTRATACION": {
+        "votos_totales": 1944,
+        "votos_sergio_fajardo": 9,
+        "porcentaje": 0.46
+    },
+    "COROMORO": {
+        "votos_totales": 2943,
+        "votos_sergio_fajardo": 9,
+        "porcentaje": 0.31
+    },
+    "CURITI": {
+        "votos_totales": 7050,
+        "votos_sergio_fajardo": 50,
+        "porcentaje": 0.71
+    },
+    "EL CARMEN": {
+        "votos_totales": 7309,
+        "votos_sergio_fajardo": 26,
+        "porcentaje": 0.36
+    },
+    "EL GUACAMAYO": {
+        "votos_totales": 945,
+        "votos_sergio_fajardo": 6,
+        "porcentaje": 0.63
+    },
+    "EL PEÑON": {
+        "votos_totales": 2020,
+        "votos_sergio_fajardo": 19,
+        "porcentaje": 0.94
+    },
+    "EL PLAYON": {
+        "votos_totales": 6963,
+        "votos_sergio_fajardo": 28,
+        "porcentaje": 0.4
+    },
+    "ENCINO": {
+        "votos_totales": 1387,
+        "votos_sergio_fajardo": 8,
+        "porcentaje": 0.58
+    },
+    "ENCISO": {
+        "votos_totales": 2046,
+        "votos_sergio_fajardo": 18,
+        "porcentaje": 0.88
+    },
+    "FLORIAN": {
+        "votos_totales": 2976,
+        "votos_sergio_fajardo": 19,
+        "porcentaje": 0.64
+    },
+    "FLORIDABLANCA": {
+        "votos_totales": 151849,
+        "votos_sergio_fajardo": 2159,
+        "porcentaje": 1.42
+    },
+    "GALAN": {
+        "votos_totales": 1672,
+        "votos_sergio_fajardo": 21,
+        "porcentaje": 1.26
+    },
+    "GAMBITA": {
+        "votos_totales": 2085,
+        "votos_sergio_fajardo": 17,
+        "porcentaje": 0.82
+    },
+    "GIRON": {
+        "votos_totales": 84428,
+        "votos_sergio_fajardo": 590,
+        "porcentaje": 0.7
+    },
+    "GUACA": {
+        "votos_totales": 3081,
+        "votos_sergio_fajardo": 8,
+        "porcentaje": 0.26
+    },
+    "GUADALUPE": {
+        "votos_totales": 2897,
+        "votos_sergio_fajardo": 13,
+        "porcentaje": 0.45
+    },
+    "GUAPOTA": {
+        "votos_totales": 1318,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.76
+    },
+    "GUAVATA": {
+        "votos_totales": 2738,
+        "votos_sergio_fajardo": 24,
+        "porcentaje": 0.88
+    },
+    "GUEPSA": {
+        "votos_totales": 2515,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.4
+    },
+    "HATO": {
+        "votos_totales": 1317,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 1.14
+    },
+    "JESUS MARIA": {
+        "votos_totales": 1989,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.5
+    },
+    "JORDAN": {
+        "votos_totales": 818,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.86
+    },
+    "LA BELLEZA": {
+        "votos_totales": 3262,
+        "votos_sergio_fajardo": 17,
+        "porcentaje": 0.52
+    },
+    "LA PAZ": {
+        "votos_totales": 2252,
+        "votos_sergio_fajardo": 13,
+        "porcentaje": 0.58
+    },
+    "LANDAZURI": {
+        "votos_totales": 5303,
+        "votos_sergio_fajardo": 28,
+        "porcentaje": 0.53
+    },
+    "LEBRIJA": {
+        "votos_totales": 22964,
+        "votos_sergio_fajardo": 90,
+        "porcentaje": 0.39
+    },
+    "LOS SANTOS": {
+        "votos_totales": 7010,
+        "votos_sergio_fajardo": 57,
+        "porcentaje": 0.81
+    },
+    "MACARAVITA": {
+        "votos_totales": 1251,
+        "votos_sergio_fajardo": 4,
+        "porcentaje": 0.32
+    },
+    "MALAGA": {
+        "votos_totales": 10508,
+        "votos_sergio_fajardo": 137,
+        "porcentaje": 1.3
+    },
+    "MATANZA": {
+        "votos_totales": 3381,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 0.44
+    },
+    "MOGOTES": {
+        "votos_totales": 5192,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.27
+    },
+    "MOLAGAVITA": {
+        "votos_totales": 2175,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.46
+    },
+    "OCAMONTE": {
+        "votos_totales": 2665,
+        "votos_sergio_fajardo": 16,
+        "porcentaje": 0.6
+    },
+    "OIBA": {
+        "votos_totales": 6186,
+        "votos_sergio_fajardo": 33,
+        "porcentaje": 0.53
+    },
+    "ONZAGA": {
+        "votos_totales": 2192,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.46
+    },
+    "PALMAR": {
+        "votos_totales": 959,
+        "votos_sergio_fajardo": 2,
+        "porcentaje": 0.21
+    },
+    "PALMAS DEL SOCORRO": {
+        "votos_totales": 1651,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.85
+    },
+    "PARAMO": {
+        "votos_totales": 2747,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 0.55
+    },
+    "PIEDECUESTA": {
+        "votos_totales": 88531,
+        "votos_sergio_fajardo": 687,
+        "porcentaje": 0.78
+    },
+    "PINCHOTE": {
+        "votos_totales": 2597,
+        "votos_sergio_fajardo": 26,
+        "porcentaje": 1.0
+    },
+    "PUENTE NACIONAL": {
+        "votos_totales": 7962,
+        "votos_sergio_fajardo": 84,
+        "porcentaje": 1.06
+    },
+    "PUERTO PARRA": {
+        "votos_totales": 3163,
+        "votos_sergio_fajardo": 40,
+        "porcentaje": 1.26
+    },
+    "PUERTO WILCHES": {
+        "votos_totales": 14546,
+        "votos_sergio_fajardo": 121,
+        "porcentaje": 0.83
+    },
+    "RIONEGRO": {
+        "votos_totales": 14718,
+        "votos_sergio_fajardo": 83,
+        "porcentaje": 0.56
+    },
+    "SABANA DE TORRES": {
+        "votos_totales": 14360,
+        "votos_sergio_fajardo": 65,
+        "porcentaje": 0.45
+    },
+    "SAN ANDRES": {
+        "votos_totales": 3939,
+        "votos_sergio_fajardo": 33,
+        "porcentaje": 0.84
+    },
+    "SAN BENITO": {
+        "votos_totales": 1603,
+        "votos_sergio_fajardo": 9,
+        "porcentaje": 0.56
+    },
+    "SAN GIL": {
+        "votos_totales": 32197,
+        "votos_sergio_fajardo": 310,
+        "porcentaje": 0.96
+    },
+    "SAN JOAQUIN": {
+        "votos_totales": 1193,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.59
+    },
+    "SAN JOSE DE MIRANDA": {
+        "votos_totales": 2740,
+        "votos_sergio_fajardo": 24,
+        "porcentaje": 0.88
+    },
+    "SAN MIGUEL": {
+        "votos_totales": 1295,
+        "votos_sergio_fajardo": 6,
+        "porcentaje": 0.46
+    },
+    "SAN VICENTE DE CHUCURI": {
+        "votos_totales": 14442,
+        "votos_sergio_fajardo": 84,
+        "porcentaje": 0.58
+    },
+    "SANTA BARBARA": {
+        "votos_totales": 1485,
+        "votos_sergio_fajardo": 5,
+        "porcentaje": 0.34
+    },
+    "SANTA HELENA DEL OPON": {
+        "votos_totales": 1909,
+        "votos_sergio_fajardo": 4,
+        "porcentaje": 0.21
+    },
+    "SIMACOTA": {
+        "votos_totales": 3833,
+        "votos_sergio_fajardo": 26,
+        "porcentaje": 0.68
+    },
+    "SOCORRO": {
+        "votos_totales": 16696,
+        "votos_sergio_fajardo": 191,
+        "porcentaje": 1.14
+    },
+    "SUAITA": {
+        "votos_totales": 5180,
+        "votos_sergio_fajardo": 27,
+        "porcentaje": 0.52
+    },
+    "SUCRE": {
+        "votos_totales": 3028,
+        "votos_sergio_fajardo": 12,
+        "porcentaje": 0.4
+    },
+    "SURATA": {
+        "votos_totales": 2078,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.67
+    },
+    "TONA": {
+        "votos_totales": 3502,
+        "votos_sergio_fajardo": 17,
+        "porcentaje": 0.49
+    },
+    "VALLE DE SAN JOSE": {
+        "votos_totales": 3622,
+        "votos_sergio_fajardo": 21,
+        "porcentaje": 0.58
+    },
+    "VELEZ": {
+        "votos_totales": 10088,
+        "votos_sergio_fajardo": 113,
+        "porcentaje": 1.12
+    },
+    "VETAS": {
+        "votos_totales": 926,
+        "votos_sergio_fajardo": 12,
+        "porcentaje": 1.3
+    },
+    "VILLANUEVA": {
+        "votos_totales": 4608,
+        "votos_sergio_fajardo": 49,
+        "porcentaje": 1.06
+    },
+    "ZAPATOCA": {
+        "votos_totales": 5117,
+        "votos_sergio_fajardo": 61,
+        "porcentaje": 1.19
+    }
+};
+
+    const coords = {
+    "AGUADA": {
+        "lat": 6.03,
+        "lng": -73.66
+    },
+    "ALBANIA": {
+        "lat": 6.94,
+        "lng": -72.93
+    },
+    "ARATOCA": {
+        "lat": 6.44,
+        "lng": -73.09
+    },
+    "BARBOSA": {
+        "lat": 6.01,
+        "lng": -73.41
+    },
+    "BARICHARA": {
+        "lat": 6.47,
+        "lng": -73.23
+    },
+    "BARRANCABERMEJA": {
+        "lat": 7.06,
+        "lng": -73.85
+    },
+    "BETULIA": {
+        "lat": 6.78,
+        "lng": -73.34
+    },
+    "BOLIVAR": {
+        "lat": 6.27,
+        "lng": -73.69
+    },
+    "BUCARAMANGA": {
+        "lat": 7.12,
+        "lng": -73.1
+    },
+    "CABRERA": {
+        "lat": 6.55,
+        "lng": -73.07
+    },
+    "CALIFORNIA": {
+        "lat": 7.37,
+        "lng": -72.92
+    },
+    "CAPITANEJO": {
+        "lat": 6.47,
+        "lng": -72.58
+    },
+    "CARCASI": {
+        "lat": 6.78,
+        "lng": -72.7
+    },
+    "CEPITA": {
+        "lat": 6.84,
+        "lng": -73.05
+    },
+    "CERRITO": {
+        "lat": 6.94,
+        "lng": -72.7
+    },
+    "CHARALA": {
+        "lat": 6.3,
+        "lng": -73.23
+    },
+    "CHARTA": {
+        "lat": 7.22,
+        "lng": -72.98
+    },
+    "CHIMA": {
+        "lat": 6.13,
+        "lng": -73.62
+    },
+    "CHIPATA": {
+        "lat": 6.06,
+        "lng": -73.43
+    },
+    "CIMITARRA": {
+        "lat": 6.31,
+        "lng": -73.87
+    },
+    "CONCEPCION": {
+        "lat": 6.67,
+        "lng": -72.8
+    },
+    "CONFINES": {
+        "lat": 6.27,
+        "lng": -73.35
+    },
+    "CONTRATACION": {
+        "lat": 6.2,
+        "lng": -73.53
+    },
+    "COROMORO": {
+        "lat": 6.32,
+        "lng": -73.28
+    },
+    "CURITI": {
+        "lat": 6.5,
+        "lng": -73.05
+    },
+    "EL CARMEN": {
+        "lat": 6.6,
+        "lng": -73.02
+    },
+    "EL GUACAMAYO": {
+        "lat": 6.0,
+        "lng": -73.55
+    },
+    "EL PEÑON": {
+        "lat": 6.11,
+        "lng": -73.59
+    },
+    "EL PLAYON": {
+        "lat": 7.42,
+        "lng": -73.07
+    },
+    "ENCINO": {
+        "lat": 6.05,
+        "lng": -72.87
+    },
+    "ENCISO": {
+        "lat": 6.64,
+        "lng": -72.67
+    },
+    "FLORIAN": {
+        "lat": 5.92,
+        "lng": -73.68
+    },
+    "FLORIDABLANCA": {
+        "lat": 7.07,
+        "lng": -73.09
+    },
+    "GALAN": {
+        "lat": 6.68,
+        "lng": -73.36
+    },
+    "GAMBITA": {
+        "lat": 5.89,
+        "lng": -73.48
+    },
+    "GIRON": {
+        "lat": 7.07,
+        "lng": -73.17
+    },
+    "GUACA": {
+        "lat": 6.78,
+        "lng": -72.88
+    },
+    "GUADALUPE": {
+        "lat": 6.23,
+        "lng": -73.39
+    },
+    "GUAPOTA": {
+        "lat": 6.34,
+        "lng": -73.22
+    },
+    "GUAVATA": {
+        "lat": 5.94,
+        "lng": -73.63
+    },
+    "GUEPSA": {
+        "lat": 5.99,
+        "lng": -73.59
+    },
+    "HATO": {
+        "lat": 6.3,
+        "lng": -73.3
+    },
+    "JESUS MARIA": {
+        "lat": 6.07,
+        "lng": -73.72
+    },
+    "JORDAN": {
+        "lat": 6.74,
+        "lng": -73.07
+    },
+    "LA BELLEZA": {
+        "lat": 5.84,
+        "lng": -73.8
+    },
+    "LA PAZ": {
+        "lat": 6.11,
+        "lng": -73.64
+    },
+    "LANDAZURI": {
+        "lat": 6.15,
+        "lng": -73.87
+    },
+    "LEBRIJA": {
+        "lat": 7.15,
+        "lng": -73.25
+    },
+    "LOS SANTOS": {
+        "lat": 6.78,
+        "lng": -73.04
+    },
+    "MACARAVITA": {
+        "lat": 6.84,
+        "lng": -72.66
+    },
+    "MALAGA": {
+        "lat": 6.69,
+        "lng": -72.75
+    },
+    "MATANZA": {
+        "lat": 7.29,
+        "lng": -73.02
+    },
+    "MOGOTES": {
+        "lat": 6.47,
+        "lng": -72.98
+    },
+    "MOLAGAVITA": {
+        "lat": 6.55,
+        "lng": -72.9
+    },
+    "OCAMONTE": {
+        "lat": 6.27,
+        "lng": -73.06
+    },
+    "OIBA": {
+        "lat": 6.38,
+        "lng": -73.3
+    },
+    "ONZAGA": {
+        "lat": 6.24,
+        "lng": -72.79
+    },
+    "PALMAR": {
+        "lat": 6.54,
+        "lng": -73.19
+    },
+    "PALMAS DEL SOCORRO": {
+        "lat": 6.32,
+        "lng": -73.25
+    },
+    "PARAMO": {
+        "lat": 6.26,
+        "lng": -73.18
+    },
+    "PIEDECUESTA": {
+        "lat": 6.99,
+        "lng": -73.05
+    },
+    "PINCHOTE": {
+        "lat": 6.5,
+        "lng": -73.15
+    },
+    "PUENTE NACIONAL": {
+        "lat": 5.96,
+        "lng": -73.67
+    },
+    "PUERTO PARRA": {
+        "lat": 6.47,
+        "lng": -73.96
+    },
+    "PUERTO WILCHES": {
+        "lat": 7.23,
+        "lng": -73.9
+    },
+    "RIONEGRO": {
+        "lat": 7.37,
+        "lng": -73.22
+    },
+    "SABANA DE TORRES": {
+        "lat": 7.37,
+        "lng": -73.54
+    },
+    "SAN ANDRES": {
+        "lat": 6.75,
+        "lng": -72.82
+    },
+    "SAN BENITO": {
+        "lat": 6.07,
+        "lng": -73.61
+    },
+    "SAN GIL": {
+        "lat": 6.55,
+        "lng": -73.13
+    },
+    "SAN JOAQUIN": {
+        "lat": 6.38,
+        "lng": -72.96
+    },
+    "SAN JOSE DE MIRANDA": {
+        "lat": 6.71,
+        "lng": -72.7
+    },
+    "SAN MIGUEL": {
+        "lat": 6.15,
+        "lng": -73.47
+    },
+    "SAN VICENTE DE CHUCURI": {
+        "lat": 6.88,
+        "lng": -73.41
+    },
+    "SANTA BARBARA": {
+        "lat": 6.09,
+        "lng": -73.5
+    },
+    "SANTA HELENA DEL OPON": {
+        "lat": 6.11,
+        "lng": -73.78
+    },
+    "SIMACOTA": {
+        "lat": 6.49,
+        "lng": -73.4
+    },
+    "SOCORRO": {
+        "lat": 6.47,
+        "lng": -73.27
+    },
+    "SUAITA": {
+        "lat": 6.06,
+        "lng": -73.38
+    },
+    "SUCRE": {
+        "lat": 6.12,
+        "lng": -73.2
+    },
+    "SURATA": {
+        "lat": 7.35,
+        "lng": -72.94
+    },
+    "TONA": {
+        "lat": 7.2,
+        "lng": -73.03
+    },
+    "VALLE DE SAN JOSE": {
+        "lat": 6.42,
+        "lng": -73.17
+    },
+    "VELEZ": {
+        "lat": 6.0,
+        "lng": -73.67
+    },
+    "VETAS": {
+        "lat": 7.33,
+        "lng": -72.92
+    },
+    "VILLANUEVA": {
+        "lat": 6.52,
+        "lng": -73.18
+    },
+    "ZAPATOCA": {
+        "lat": 6.88,
+        "lng": -73.27
+    }
+};
+
+    // 1. INICIALIZAR MAPA
+    const map = L.map('map').setView([7.12, -73.5], 8.5);
+    
+    // 2. CAMBIO A MAPA CLARO (CartoDB Positron)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap, © CartoDB'
+    }).addTo(map);
+
+    // 3. FUNCIÓN DE COLOR (Rojo -> Azul)
+    function getColor(p) {
+        return p > 1.5 ? '#0056b3' : // Azul profundo (Excelente votación)
+               p > 1 ? '#3385ff' : // Azul claro
+               p > 0.5  ? '#ff9999' : // Rojo pálido
+                        '#e60000';   // Rojo intenso (Baja votación)
+    }
+
+    // 4. DIBUJAR LOS PUNTOS
+    Object.keys(votos).forEach(nombre => {
+        if (coords[nombre]) {
+            const data = votos[nombre];
+            const pos = coords[nombre];
+
+            // Círculos con borde suave para que se vean bien en fondo claro
+            const marker = L.circleMarker([pos.lat, pos.lng], {
+                //radius: Math.sqrt(data.votos_totales) * 0.1, 
+                radius: 7,
+                fillColor: getColor(data.porcentaje),
+                color: "#666", // Borde gris suave
+                weight: 1,
+                opacity: 0.8,
+                fillOpacity: 0.7
+            }).addTo(map);
+
+            marker.bindPopup(`
+                <div style="text-align: center" class="custom-popup">
+                    <h3 style="margin:0 0 5px 0">${nombre}</h3>
+                    <b style="font-size: 1.3em; color: ${getColor(data.porcentaje)}">${data.porcentaje}%</b>
+                    <div style="border-top: 1px solid #eee; margin-top: 5px; padding-top: 5px;">
+                        <small>Votos Fajardo: ${data.votos_sergio_fajardo}</small>
+                    </div>
+                </div>
+            `);
+        }
+    });
+
+    // 5. LEYENDA ACTUALIZADA
+    const legend = L.control({position: 'bottomright'});
+    legend.onAdd = function (map) {
+        const div = L.DomUtil.create('div', 'legend');
+        const labels = ['<strong>Votación Fajardo</strong>'];
+        const ranges = [0, 0.5, 1, 1.5];
+        
+        for (let i = 0; i < ranges.length; i++) {
+            div.innerHTML +=
+                '<i style="background:' + getColor(ranges[i] + 1) + '; width:12px; height:12px; float:left; margin-right:8px; margin-top:5px; border-radius: 50%;"></i> ' +
+                ranges[i] + (ranges[i + 1] ? '% &ndash; ' + ranges[i + 1] + '%<br>' : '%+');
+        }
+        return div;
+    };
+    legend.addTo(map);
+
+</script>
+</body>
+</html>
