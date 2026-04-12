@@ -17,15 +17,35 @@
         }
         
         /* Leyenda elegante */
-        .legend {
-            background: white;
-            padding: 15px;
-            line-height: 22px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            color: #444;
-            font-size: 13px;
-        }
+        /* Estilo base de la leyenda */
+.legend {
+    background: white;
+    padding: 10px;
+    line-height: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    color: #444;
+    font-size: 13px;
+    /* CRÍTICO: Asegura que esté por encima de todo */
+    z-index: 1000 !important; 
+}
+
+/* Ajustes específicos para Celulares */
+@media (max-width: 600px) {
+    .legend {
+        font-size: 11px; /* Letra un poco más pequeña */
+        padding: 6px;    /* Menos espacio interno */
+        line-height: 16px;
+        max-width: 120px; /* Evita que ocupe media pantalla */
+        margin-bottom: 30px !important; /* La sube un poco para que no tape la atribución */
+    }
+    
+    .legend i {
+        width: 10px !important;
+        height: 10px !important;
+        margin-top: 3px !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -849,7 +869,7 @@
             // Círculos con borde suave para que se vean bien en fondo claro
             const marker = L.circleMarker([pos.lat, pos.lng], {
                 //radius: Math.sqrt(data.votos_totales) * 0.1, 
-                radius: 7,
+                radius: 10,
                 fillColor: getColor(data.porcentaje),
                 color: "#666", // Borde gris suave
                 weight: 1,
