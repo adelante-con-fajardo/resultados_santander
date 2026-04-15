@@ -1,0 +1,437 @@
+{
+    "AGUADA": {
+        "votos_totales": 863,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.81
+    },
+    "ALBANIA": {
+        "votos_totales": 1894,
+        "votos_sergio_fajardo": 20,
+        "porcentaje": 1.06
+    },
+    "ARATOCA": {
+        "votos_totales": 4492,
+        "votos_sergio_fajardo": 24,
+        "porcentaje": 0.53
+    },
+    "BARBOSA": {
+        "votos_totales": 17074,
+        "votos_sergio_fajardo": 147,
+        "porcentaje": 0.86
+    },
+    "BARICHARA": {
+        "votos_totales": 4858,
+        "votos_sergio_fajardo": 101,
+        "porcentaje": 2.08
+    },
+    "BARRANCABERMEJA": {
+        "votos_totales": 116777,
+        "votos_sergio_fajardo": 1292,
+        "porcentaje": 1.11
+    },
+    "BETULIA": {
+        "votos_totales": 2651,
+        "votos_sergio_fajardo": 21,
+        "porcentaje": 0.79
+    },
+    "BOLIVAR": {
+        "votos_totales": 4349,
+        "votos_sergio_fajardo": 35,
+        "porcentaje": 0.8
+    },
+    "BUCARAMANGA": {
+        "votos_totales": 342459,
+        "votos_sergio_fajardo": 6148,
+        "porcentaje": 1.8
+    },
+    "CABRERA": {
+        "votos_totales": 1116,
+        "votos_sergio_fajardo": 4,
+        "porcentaje": 0.36
+    },
+    "CALIFORNIA": {
+        "votos_totales": 1093,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.64
+    },
+    "CAPITANEJO": {
+        "votos_totales": 2962,
+        "votos_sergio_fajardo": 39,
+        "porcentaje": 1.32
+    },
+    "CARCASI": {
+        "votos_totales": 2167,
+        "votos_sergio_fajardo": 8,
+        "porcentaje": 0.37
+    },
+    "CEPITA": {
+        "votos_totales": 1400,
+        "votos_sergio_fajardo": 6,
+        "porcentaje": 0.43
+    },
+    "CERRITO": {
+        "votos_totales": 3317,
+        "votos_sergio_fajardo": 19,
+        "porcentaje": 0.57
+    },
+    "CHARALA": {
+        "votos_totales": 6204,
+        "votos_sergio_fajardo": 52,
+        "porcentaje": 0.84
+    },
+    "CHARTA": {
+        "votos_totales": 2121,
+        "votos_sergio_fajardo": 16,
+        "porcentaje": 0.75
+    },
+    "CHIMA": {
+        "votos_totales": 1591,
+        "votos_sergio_fajardo": 5,
+        "porcentaje": 0.31
+    },
+    "CHIPATA": {
+        "votos_totales": 2296,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 0.65
+    },
+    "CIMITARRA": {
+        "votos_totales": 14652,
+        "votos_sergio_fajardo": 127,
+        "porcentaje": 0.87
+    },
+    "CONCEPCION": {
+        "votos_totales": 3085,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.45
+    },
+    "CONFINES": {
+        "votos_totales": 1838,
+        "votos_sergio_fajardo": 12,
+        "porcentaje": 0.65
+    },
+    "CONTRATACION": {
+        "votos_totales": 1944,
+        "votos_sergio_fajardo": 9,
+        "porcentaje": 0.46
+    },
+    "COROMORO": {
+        "votos_totales": 2943,
+        "votos_sergio_fajardo": 9,
+        "porcentaje": 0.31
+    },
+    "CURITI": {
+        "votos_totales": 7050,
+        "votos_sergio_fajardo": 50,
+        "porcentaje": 0.71
+    },
+    "EL CARMEN": {
+        "votos_totales": 7309,
+        "votos_sergio_fajardo": 26,
+        "porcentaje": 0.36
+    },
+    "EL GUACAMAYO": {
+        "votos_totales": 945,
+        "votos_sergio_fajardo": 6,
+        "porcentaje": 0.63
+    },
+    "EL PEÑON": {
+        "votos_totales": 2020,
+        "votos_sergio_fajardo": 19,
+        "porcentaje": 0.94
+    },
+    "EL PLAYON": {
+        "votos_totales": 6963,
+        "votos_sergio_fajardo": 28,
+        "porcentaje": 0.4
+    },
+    "ENCINO": {
+        "votos_totales": 1387,
+        "votos_sergio_fajardo": 8,
+        "porcentaje": 0.58
+    },
+    "ENCISO": {
+        "votos_totales": 2046,
+        "votos_sergio_fajardo": 18,
+        "porcentaje": 0.88
+    },
+    "FLORIAN": {
+        "votos_totales": 2976,
+        "votos_sergio_fajardo": 19,
+        "porcentaje": 0.64
+    },
+    "FLORIDABLANCA": {
+        "votos_totales": 151849,
+        "votos_sergio_fajardo": 2159,
+        "porcentaje": 1.42
+    },
+    "GALAN": {
+        "votos_totales": 1672,
+        "votos_sergio_fajardo": 21,
+        "porcentaje": 1.26
+    },
+    "GAMBITA": {
+        "votos_totales": 2085,
+        "votos_sergio_fajardo": 17,
+        "porcentaje": 0.82
+    },
+    "GIRON": {
+        "votos_totales": 84428,
+        "votos_sergio_fajardo": 590,
+        "porcentaje": 0.7
+    },
+    "GUACA": {
+        "votos_totales": 3081,
+        "votos_sergio_fajardo": 8,
+        "porcentaje": 0.26
+    },
+    "GUADALUPE": {
+        "votos_totales": 2897,
+        "votos_sergio_fajardo": 13,
+        "porcentaje": 0.45
+    },
+    "GUAPOTA": {
+        "votos_totales": 1318,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.76
+    },
+    "GUAVATA": {
+        "votos_totales": 2738,
+        "votos_sergio_fajardo": 24,
+        "porcentaje": 0.88
+    },
+    "GUEPSA": {
+        "votos_totales": 2515,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.4
+    },
+    "HATO": {
+        "votos_totales": 1317,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 1.14
+    },
+    "JESUS MARIA": {
+        "votos_totales": 1989,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.5
+    },
+    "JORDAN": {
+        "votos_totales": 818,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.86
+    },
+    "LA BELLEZA": {
+        "votos_totales": 3262,
+        "votos_sergio_fajardo": 17,
+        "porcentaje": 0.52
+    },
+    "LA PAZ": {
+        "votos_totales": 2252,
+        "votos_sergio_fajardo": 13,
+        "porcentaje": 0.58
+    },
+    "LANDAZURI": {
+        "votos_totales": 5303,
+        "votos_sergio_fajardo": 28,
+        "porcentaje": 0.53
+    },
+    "LEBRIJA": {
+        "votos_totales": 22964,
+        "votos_sergio_fajardo": 90,
+        "porcentaje": 0.39
+    },
+    "LOS SANTOS": {
+        "votos_totales": 7010,
+        "votos_sergio_fajardo": 57,
+        "porcentaje": 0.81
+    },
+    "MACARAVITA": {
+        "votos_totales": 1251,
+        "votos_sergio_fajardo": 4,
+        "porcentaje": 0.32
+    },
+    "MALAGA": {
+        "votos_totales": 10508,
+        "votos_sergio_fajardo": 137,
+        "porcentaje": 1.3
+    },
+    "MATANZA": {
+        "votos_totales": 3381,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 0.44
+    },
+    "MOGOTES": {
+        "votos_totales": 5192,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.27
+    },
+    "MOLAGAVITA": {
+        "votos_totales": 2175,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.46
+    },
+    "OCAMONTE": {
+        "votos_totales": 2665,
+        "votos_sergio_fajardo": 16,
+        "porcentaje": 0.6
+    },
+    "OIBA": {
+        "votos_totales": 6186,
+        "votos_sergio_fajardo": 33,
+        "porcentaje": 0.53
+    },
+    "ONZAGA": {
+        "votos_totales": 2192,
+        "votos_sergio_fajardo": 10,
+        "porcentaje": 0.46
+    },
+    "PALMAR": {
+        "votos_totales": 959,
+        "votos_sergio_fajardo": 2,
+        "porcentaje": 0.21
+    },
+    "PALMAS DEL SOCORRO": {
+        "votos_totales": 1651,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.85
+    },
+    "PARAMO": {
+        "votos_totales": 2747,
+        "votos_sergio_fajardo": 15,
+        "porcentaje": 0.55
+    },
+    "PIEDECUESTA": {
+        "votos_totales": 88531,
+        "votos_sergio_fajardo": 687,
+        "porcentaje": 0.78
+    },
+    "PINCHOTE": {
+        "votos_totales": 2597,
+        "votos_sergio_fajardo": 26,
+        "porcentaje": 1.0
+    },
+    "PUENTE NACIONAL": {
+        "votos_totales": 7962,
+        "votos_sergio_fajardo": 84,
+        "porcentaje": 1.06
+    },
+    "PUERTO PARRA": {
+        "votos_totales": 3163,
+        "votos_sergio_fajardo": 40,
+        "porcentaje": 1.26
+    },
+    "PUERTO WILCHES": {
+        "votos_totales": 14546,
+        "votos_sergio_fajardo": 121,
+        "porcentaje": 0.83
+    },
+    "RIONEGRO": {
+        "votos_totales": 14718,
+        "votos_sergio_fajardo": 83,
+        "porcentaje": 0.56
+    },
+    "SABANA DE TORRES": {
+        "votos_totales": 14360,
+        "votos_sergio_fajardo": 65,
+        "porcentaje": 0.45
+    },
+    "SAN ANDRES": {
+        "votos_totales": 3939,
+        "votos_sergio_fajardo": 33,
+        "porcentaje": 0.84
+    },
+    "SAN BENITO": {
+        "votos_totales": 1603,
+        "votos_sergio_fajardo": 9,
+        "porcentaje": 0.56
+    },
+    "SAN GIL": {
+        "votos_totales": 32197,
+        "votos_sergio_fajardo": 310,
+        "porcentaje": 0.96
+    },
+    "SAN JOAQUIN": {
+        "votos_totales": 1193,
+        "votos_sergio_fajardo": 7,
+        "porcentaje": 0.59
+    },
+    "SAN JOSE DE MIRANDA": {
+        "votos_totales": 2740,
+        "votos_sergio_fajardo": 24,
+        "porcentaje": 0.88
+    },
+    "SAN MIGUEL": {
+        "votos_totales": 1295,
+        "votos_sergio_fajardo": 6,
+        "porcentaje": 0.46
+    },
+    "SAN VICENTE DE CHUCURI": {
+        "votos_totales": 14442,
+        "votos_sergio_fajardo": 84,
+        "porcentaje": 0.58
+    },
+    "SANTA BARBARA": {
+        "votos_totales": 1485,
+        "votos_sergio_fajardo": 5,
+        "porcentaje": 0.34
+    },
+    "SANTA HELENA DEL OPON": {
+        "votos_totales": 1909,
+        "votos_sergio_fajardo": 4,
+        "porcentaje": 0.21
+    },
+    "SIMACOTA": {
+        "votos_totales": 3833,
+        "votos_sergio_fajardo": 26,
+        "porcentaje": 0.68
+    },
+    "SOCORRO": {
+        "votos_totales": 16696,
+        "votos_sergio_fajardo": 191,
+        "porcentaje": 1.14
+    },
+    "SUAITA": {
+        "votos_totales": 5180,
+        "votos_sergio_fajardo": 27,
+        "porcentaje": 0.52
+    },
+    "SUCRE": {
+        "votos_totales": 3028,
+        "votos_sergio_fajardo": 12,
+        "porcentaje": 0.4
+    },
+    "SURATA": {
+        "votos_totales": 2078,
+        "votos_sergio_fajardo": 14,
+        "porcentaje": 0.67
+    },
+    "TONA": {
+        "votos_totales": 3502,
+        "votos_sergio_fajardo": 17,
+        "porcentaje": 0.49
+    },
+    "VALLE DE SAN JOSE": {
+        "votos_totales": 3622,
+        "votos_sergio_fajardo": 21,
+        "porcentaje": 0.58
+    },
+    "VELEZ": {
+        "votos_totales": 10088,
+        "votos_sergio_fajardo": 113,
+        "porcentaje": 1.12
+    },
+    "VETAS": {
+        "votos_totales": 926,
+        "votos_sergio_fajardo": 12,
+        "porcentaje": 1.3
+    },
+    "VILLANUEVA": {
+        "votos_totales": 4608,
+        "votos_sergio_fajardo": 49,
+        "porcentaje": 1.06
+    },
+    "ZAPATOCA": {
+        "votos_totales": 5117,
+        "votos_sergio_fajardo": 61,
+        "porcentaje": 1.19
+    }
+}

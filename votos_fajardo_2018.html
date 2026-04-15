@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa Electoral Santander - Versión Clara</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; }
+        #map { height: 100vh; width: 100%; }
+        
+        /* Estilo para los Popups (ahora en blanco/negro para fondo claro) */
+        .custom-popup .leaflet-popup-content-wrapper {
+            background: #ffffff;
+            color: #333;
+            border-radius: 4px;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.2);
+        }
+        
+        /* Leyenda elegante */
+        /* Estilo base de la leyenda */
+.legend {
+    background: white;
+    padding: 10px;
+    line-height: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    color: #444;
+    font-size: 13px;
+    /* CRÍTICO: Asegura que esté por encima de todo */
+    z-index: 1000 !important; 
+}
+
+/* Ajustes específicos para Celulares */
+@media (max-width: 600px) {
+    .legend {
+        font-size: 11px; /* Letra un poco más pequeña */
+        padding: 6px;    /* Menos espacio interno */
+        line-height: 16px;
+        max-width: 120px; /* Evita que ocupe media pantalla */
+        margin-bottom: 30px !important; /* La sube un poco para que no tape la atribución */
+    }
+    
+    .legend i {
+        width: 10px !important;
+        height: 10px !important;
+        margin-top: 3px !important;
+    }
+}
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+
+    const coords = {
+    "AGUADA": {
+        "lat": 6.03,
+        "lng": -73.66
+    },
+    "ALBANIA": {
+        "lat": 6.94,
+        "lng": -72.93
+    },
+    "ARATOCA": {
+        "lat": 6.44,
+        "lng": -73.09
+    },
+    "BARBOSA": {
+        "lat": 6.01,
+        "lng": -73.41
+    },
+    "BARICHARA": {
+        "lat": 6.47,
+        "lng": -73.23
+    },
+    "BARRANCABERMEJA": {
+        "lat": 7.06,
+        "lng": -73.85
+    },
+    "BETULIA": {
+        "lat": 6.78,
+        "lng": -73.34
+    },
+    "BOLIVAR": {
+        "lat": 6.27,
+        "lng": -73.69
+    },
+    "BUCARAMANGA": {
+        "lat": 7.12,
+        "lng": -73.1
+    },
+    "CABRERA": {
+        "lat": 6.55,
+        "lng": -73.07
+    },
+    "CALIFORNIA": {
+        "lat": 7.37,
+        "lng": -72.92
+    },
+    "CAPITANEJO": {
+        "lat": 6.47,
+        "lng": -72.58
+    },
+    "CARCASI": {
+        "lat": 6.78,
+        "lng": -72.7
+    },
+    "CEPITA": {
+        "lat": 6.84,
+        "lng": -73.05
+    },
+    "CERRITO": {
+        "lat": 6.94,
+        "lng": -72.7
+    },
+    "CHARALA": {
+        "lat": 6.3,
+        "lng": -73.23
+    },
+    "CHARTA": {
+        "lat": 7.22,
+        "lng": -72.98
+    },
+    "CHIMA": {
+        "lat": 6.13,
+        "lng": -73.62
+    },
+    "CHIPATA": {
+        "lat": 6.06,
+        "lng": -73.43
+    },
+    "CIMITARRA": {
+        "lat": 6.31,
+        "lng": -73.87
+    },
+    "CONCEPCION": {
+        "lat": 6.67,
+        "lng": -72.8
+    },
+    "CONFINES": {
+        "lat": 6.27,
+        "lng": -73.35
+    },
+    "CONTRATACION": {
+        "lat": 6.2,
+        "lng": -73.53
+    },
+    "COROMORO": {
+        "lat": 6.32,
+        "lng": -73.28
+    },
+    "CURITI": {
+        "lat": 6.5,
+        "lng": -73.05
+    },
+    "EL CARMEN": {
+        "lat": 6.6,
+        "lng": -73.02
+    },
+    "EL GUACAMAYO": {
+        "lat": 6.0,
+        "lng": -73.55
+    },
+    "EL PEÑON": {
+        "lat": 6.11,
+        "lng": -73.59
+    },
+    "EL PLAYON": {
+        "lat": 7.42,
+        "lng": -73.07
+    },
+    "ENCINO": {
+        "lat": 6.05,
+        "lng": -72.87
+    },
+    "ENCISO": {
+        "lat": 6.64,
+        "lng": -72.67
+    },
+    "FLORIAN": {
+        "lat": 5.92,
+        "lng": -73.68
+    },
+    "FLORIDABLANCA": {
+        "lat": 7.07,
+        "lng": -73.09
+    },
+    "GALAN": {
+        "lat": 6.68,
+        "lng": -73.36
+    },
+    "GAMBITA": {
+        "lat": 5.89,
+        "lng": -73.48
+    },
+    "GIRON": {
+        "lat": 7.07,
+        "lng": -73.17
+    },
+    "GUACA": {
+        "lat": 6.78,
+        "lng": -72.88
+    },
+    "GUADALUPE": {
+        "lat": 6.23,
+        "lng": -73.39
+    },
+    "GUAPOTA": {
+        "lat": 6.34,
+        "lng": -73.22
+    },
+    "GUAVATA": {
+        "lat": 5.94,
+        "lng": -73.63
+    },
+    "GUEPSA": {
+        "lat": 5.99,
+        "lng": -73.59
+    },
+    "HATO": {
+        "lat": 6.3,
+        "lng": -73.3
+    },
+    "JESUS MARIA": {
+        "lat": 6.07,
+        "lng": -73.72
+    },
+    "JORDAN": {
+        "lat": 6.74,
+        "lng": -73.07
+    },
+    "LA BELLEZA": {
+        "lat": 5.84,
+        "lng": -73.8
+    },
+    "LA PAZ": {
+        "lat": 6.11,
+        "lng": -73.64
+    },
+    "LANDAZURI": {
+        "lat": 6.15,
+        "lng": -73.87
+    },
+    "LEBRIJA": {
+        "lat": 7.15,
+        "lng": -73.25
+    },
+    "LOS SANTOS": {
+        "lat": 6.78,
+        "lng": -73.04
+    },
+    "MACARAVITA": {
+        "lat": 6.84,
+        "lng": -72.66
+    },
+    "MALAGA": {
+        "lat": 6.69,
+        "lng": -72.75
+    },
+    "MATANZA": {
+        "lat": 7.29,
+        "lng": -73.02
+    },
+    "MOGOTES": {
+        "lat": 6.47,
+        "lng": -72.98
+    },
+    "MOLAGAVITA": {
+        "lat": 6.55,
+        "lng": -72.9
+    },
+    "OCAMONTE": {
+        "lat": 6.27,
+        "lng": -73.06
+    },
+    "OIBA": {
+        "lat": 6.38,
+        "lng": -73.3
+    },
+    "ONZAGA": {
+        "lat": 6.24,
+        "lng": -72.79
+    },
+    "PALMAR": {
+        "lat": 6.54,
+        "lng": -73.19
+    },
+    "PALMAS DEL SOCORRO": {
+        "lat": 6.32,
+        "lng": -73.25
+    },
+    "PARAMO": {
+        "lat": 6.26,
+        "lng": -73.18
+    },
+    "PIEDECUESTA": {
+        "lat": 6.99,
+        "lng": -73.05
+    },
+    "PINCHOTE": {
+        "lat": 6.5,
+        "lng": -73.15
+    },
+    "PUENTE NACIONAL": {
+        "lat": 5.96,
+        "lng": -73.67
+    },
+    "PUERTO PARRA": {
+        "lat": 6.47,
+        "lng": -73.96
+    },
+    "PUERTO WILCHES": {
+        "lat": 7.23,
+        "lng": -73.9
+    },
+    "RIONEGRO": {
+        "lat": 7.37,
+        "lng": -73.22
+    },
+    "SABANA DE TORRES": {
+        "lat": 7.37,
+        "lng": -73.54
+    },
+    "SAN ANDRES": {
+        "lat": 6.75,
+        "lng": -72.82
+    },
+    "SAN BENITO": {
+        "lat": 6.07,
+        "lng": -73.61
+    },
+    "SAN GIL": {
+        "lat": 6.55,
+        "lng": -73.13
+    },
+    "SAN JOAQUIN": {
+        "lat": 6.38,
+        "lng": -72.96
+    },
+    "SAN JOSE DE MIRANDA": {
+        "lat": 6.71,
+        "lng": -72.7
+    },
+    "SAN MIGUEL": {
+        "lat": 6.15,
+        "lng": -73.47
+    },
+    "SAN VICENTE DE CHUCURI": {
+        "lat": 6.88,
+        "lng": -73.41
+    },
+    "SANTA BARBARA": {
+        "lat": 6.09,
+        "lng": -73.5
+    },
+    "SANTA HELENA DEL OPON": {
+        "lat": 6.11,
+        "lng": -73.78
+    },
+    "SIMACOTA": {
+        "lat": 6.49,
+        "lng": -73.4
+    },
+    "SOCORRO": {
+        "lat": 6.47,
+        "lng": -73.27
+    },
+    "SUAITA": {
+        "lat": 6.06,
+        "lng": -73.38
+    },
+    "SUCRE": {
+        "lat": 6.12,
+        "lng": -73.2
+    },
+    "SURATA": {
+        "lat": 7.35,
+        "lng": -72.94
+    },
+    "TONA": {
+        "lat": 7.2,
+        "lng": -73.03
+    },
+    "VALLE DE SAN JOSE": {
+        "lat": 6.42,
+        "lng": -73.17
+    },
+    "VELEZ": {
+        "lat": 6.0,
+        "lng": -73.67
+    },
+    "VETAS": {
+        "lat": 7.33,
+        "lng": -72.92
+    },
+    "VILLANUEVA": {
+        "lat": 6.52,
+        "lng": -73.18
+    },
+    "ZAPATOCA": {
+        "lat": 6.88,
+        "lng": -73.27
+    }
+};
+
+    const map = L.map('map').setView([7.12, -73.5], 8.5);
+    
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '© OpenStreetMap, © CartoDB'
+    }).addTo(map);
+
+    function getColor(p) {
+        return p > 30 ? '#0056b3' : 
+               p > 15 ? '#3385ff' : 
+               p > 5  ? '#ff9999' : 
+                        '#e60000';
+    }
+
+    // --- CARGA DE DATOS EXTERNOS ---
+    fetch('votos_fajardo_santander_2018.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("No se pudo cargar el archivo datos.json");
+            }
+            return response.json();
+        })
+        .then(votos => {
+            // Todo el código que usa "votos" debe ir aquí adentro
+            dibujarMapa(votos);
+        })
+        .catch(error => console.error("Error cargando los datos:", error));
+
+    function dibujarMapa(votos) {
+        // 4. DIBUJAR LOS PUNTOS
+        Object.keys(votos).forEach(nombre => {
+            if (coords[nombre]) {
+                const data = votos[nombre];
+                const pos = coords[nombre];
+
+                const marker = L.circle([pos.lat, pos.lng], {
+                    radius: 5000, // Ahora el radio es en METROS (5km)
+                    fillColor: getColor(data.porcentaje),
+                    color: "#666",
+                    weight: 1,
+                    opacity: 0.8,
+                    fillOpacity: 0.7
+                }).addTo(map);
+
+                marker.bindPopup(`
+                    <div style="text-align: center" class="custom-popup">
+                        <h3 style="margin:0 0 5px 0">${nombre}</h3>
+                        <b style="font-size: 1.3em; color: ${getColor(data.porcentaje)}">${data.porcentaje}%</b>
+                        <div style="border-top: 1px solid #eee; margin-top: 5px; padding-top: 5px;">
+                            <small>Votos Fajardo: ${data.votos_sergio_fajardo}</small>
+                        </div>
+                    </div>
+                `);
+            }
+        });
+
+        // 5. LEYENDA
+        const legend = L.control({position: 'bottomright'});
+        legend.onAdd = function (map) {
+            const div = L.DomUtil.create('div', 'legend');
+            div.innerHTML = '<strong>Votación Fajardo</strong><br>';
+            const ranges = [0, 5, 15, 30];
+            
+            for (let i = 0; i < ranges.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + getColor(ranges[i] + 0.1) + '; width:12px; height:12px; float:left; margin-right:8px; margin-top:5px; border-radius: 50%;"></i> ' +
+                    ranges[i] + (ranges[i + 1] ? '% &ndash; ' + ranges[i + 1] + '%<br>' : '%+');
+            }
+            return div;
+        };
+        legend.addTo(map);
+    }
+</script>
+</body>
+</html>
